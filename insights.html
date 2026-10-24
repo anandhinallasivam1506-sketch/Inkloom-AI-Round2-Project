@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block title %}Insights{% endblock %}
+{% block content %}
+<div class="page-heading"><div class="eyebrow">CONTINUOUS IMPROVEMENT</div><h1>Governance insights</h1><p>Spot repeated patterns in the issues detected by your configured checks.</p></div>
+<div class="stats-grid insights-stats">
+  <div class="stat-card"><span class="stat-icon purple">▤</span><span class="stat-label">Reviews analysed</span><strong>{{ total }}</strong><small>All saved content items</small></div>
+  <div class="stat-card"><span class="stat-icon green">◎</span><span class="stat-label">Average review score</span><strong>{{ average }}<small>/100</small></strong><small>Rule-based indicator only</small></div>
+</div>
+<div class="panel insights-panel"><div class="panel-head"><div><div class="eyebrow">REPEATED PATTERNS</div><h2>Most frequent findings</h2></div></div>
+{% if top %}{% for issue, count in top %}<div class="bar-row"><div class="bar-label"><span>{{ issue }}</span><strong>{{ count }}</strong></div><div class="bar-track"><div class="bar-fill" style="width: {{ [100, count * 20]|min }}%"></div></div></div>{% endfor %}
+{% else %}<div class="empty">No repeated issues yet. Submit more content to build your insights.</div>{% endif %}
+</div>
+<div class="notice"><span>↗</span><div><strong>Use patterns to improve the source rules</strong><p>Frequent flags may indicate recurring creator mistakes—or unclear guidelines. Review the patterns with your team before changing policy.</p></div></div>
+{% endblock %}

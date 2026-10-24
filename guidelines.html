@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}Brand Guidelines{% endblock %}
+{% block content %}
+<div class="page-heading"><div class="eyebrow">SOURCE OF TRUTH</div><h1>Brand guidelines</h1><p>Define the rules that every new content review will check against.</p></div>
+<form class="form-card" method="post">
+  <label>Brand name<input name="brand_name" required value="{{ guidelines.brand_name }}"></label>
+  <label>Brand voice / tone<textarea name="tone" rows="2">{{ guidelines.tone }}</textarea></label>
+  <label>Required terminology <small>(comma-separated)</small><input name="required_terms" value="{{ guidelines.required_terms }}" placeholder="Brand name, approved product name"></label>
+  <label>Terms to avoid <small>(comma-separated)</small><textarea name="avoid_terms" rows="3">{{ guidelines.avoid_terms }}</textarea></label>
+  <label>Approved claims and facts <small>(one per line; stored as reference material)</small><textarea name="approved_claims" rows="5">{{ guidelines.approved_claims }}</textarea></label>
+  <label>Accessibility guidance<input name="accessibility_note" value="{{ guidelines.accessibility_note }}"></label>
+  <div class="form-footer"><span class="privacy-note">Changes apply to new and re-reviewed content.</span><button class="btn" type="submit">Save guidelines →</button></div>
+</form>
+<div class="notice"><span>ⓘ</span><div><strong>Important limitation</strong><p>The MVP stores approved claims as reference notes but does not semantically verify whether every sentence is factually supported. A human reviewer must verify claims against trusted evidence.</p></div></div>
+{% endblock %}

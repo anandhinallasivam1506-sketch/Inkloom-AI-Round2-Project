@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Inkloom AI{% endblock %} · Brand Governance</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">I</span><span>inkloom<span class="brand-ai"> AI</span><small>BRAND GOVERNANCE</small></span></a>
+    <div class="nav-label">WORKSPACE</div>
+    <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">▦ &nbsp; Overview</a>
+    <a class="nav-link {% if request.endpoint in ['review'] %}active{% endif %}" href="{{ url_for('review') }}">✦ &nbsp; New content review</a>
+    <a class="nav-link {% if request.endpoint in ['reviews','review_detail'] %}active{% endif %}" href="{{ url_for('reviews') }}">☷ &nbsp; Review queue</a>
+    <a class="nav-link {% if request.endpoint == 'guidelines' %}active{% endif %}" href="{{ url_for('guidelines') }}">◇ &nbsp; Brand guidelines</a>
+    <a class="nav-link {% if request.endpoint == 'insights' %}active{% endif %}" href="{{ url_for('insights') }}">↗ &nbsp; Governance insights</a>
+    <div class="sidebar-bottom"><span class="dot"></span> Local demo workspace <small>Content stays in your local SQLite database.</small></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><span class="eyebrow">BRAND OPERATIONS</span><span class="top-title">Workspace</span></div><div class="avatar">AN</div></header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <footer>Inkloom AI · Explainable local checks · Human approval stays in control</footer>
+  </main>
+</div>
+</body></html>

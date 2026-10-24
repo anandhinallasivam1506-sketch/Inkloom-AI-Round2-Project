@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% block title %}Overview{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><div class="eyebrow light">YOUR BRAND, CONSISTENT EVERYWHERE</div><h1>Make every message<br>feel like <em>your brand.</em></h1><p>Review content against your approved voice, terminology, and claims before it reaches the world.</p><a class="btn btn-light" href="{{ url_for('review') }}">＋ Start a content review</a></div>
+  <div class="hero-orbit"><div class="orbit-ring"></div><div class="orbit-center">I<span>AI</span></div><div class="orbit-chip chip-one">✓ Tone</div><div class="orbit-chip chip-two">✓ Claims</div><div class="orbit-chip chip-three">✓ Terms</div></div>
+</section>
+<div class="section-head"><div><div class="eyebrow">AT A GLANCE</div><h2>Governance overview</h2></div><a class="text-link" href="{{ url_for('insights') }}">View insights →</a></div>
+<div class="stats-grid">
+  <div class="stat-card"><span class="stat-icon purple">▤</span><span class="stat-label">Total reviews</span><strong>{{ stats.total }}</strong><small>Content items checked</small></div>
+  <div class="stat-card"><span class="stat-icon amber">◷</span><span class="stat-label">Awaiting approval</span><strong>{{ stats.pending }}</strong><small>Need a human decision</small></div>
+  <div class="stat-card"><span class="stat-icon rose">↻</span><span class="stat-label">Needs revision</span><strong>{{ stats.revision }}</strong><small>Sent back for changes</small></div>
+  <div class="stat-card"><span class="stat-icon green">✓</span><span class="stat-label">Approved</span><strong>{{ stats.approved }}</strong><small>Reviewed by a person</small></div>
+</div>
+<div class="section-head"><div><div class="eyebrow">RECENT ACTIVITY</div><h2>Latest content reviews</h2></div><a class="text-link" href="{{ url_for('reviews') }}">Open review queue →</a></div>
+<div class="table-card">
+{% if reviews %}
+<table><thead><tr><th>CONTENT</th><th>CHANNEL</th><th>BRAND SCORE</th><th>STATUS</th><th></th></tr></thead><tbody>
+{% for r in reviews %}<tr><td><a class="item-title" href="{{ url_for('review_detail', review_id=r.id) }}">{{ r.title }}</a><small class="subline">Updated {{ r.updated_at[:16].replace('T',' ') }}</small></td><td>{{ r.channel }}</td><td><span class="score">{{ r.score }}<small>/100</small></span></td><td><span class="status {{ r.status|lower|replace(' ','-') }}">{{ r.status }}</span></td><td><a class="arrow-link" href="{{ url_for('review_detail', review_id=r.id) }}">→</a></td></tr>{% endfor %}
+</tbody></table>
+{% else %}<div class="empty">No reviews yet. Start your first content review.</div>{% endif %}
+</div>
+<div class="notice"><span>ⓘ</span><div><strong>Human-in-the-loop by design</strong><p>Automated checks provide explainable suggestions. A reviewer must decide whether content is approved for publication.</p></div></div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% block title %}Review Details{% endblock %}
+{% block content %}
+<div class="breadcrumbs"><a href="{{ url_for('reviews') }}">Review queue</a> / Review #{{ review.id }}</div>
+<div class="detail-head"><div><div class="eyebrow">CONTENT REVIEW · #{{ review.id }}</div><h1>{{ review.title }}</h1><p>{{ review.channel }} · Created {{ review.created_at[:16].replace('T',' ') }}</p></div><span class="status {{ review.status|lower|replace(' ','-') }}">{{ review.status }}</span></div>
+<div class="detail-grid">
+  <section class="panel"><div class="panel-head"><div><div class="eyebrow">ORIGINAL COPY</div><h2>Content under review</h2></div><span class="score large">{{ review.score }}<small>/100</small></span></div>
+  <div class="copy-box">{{ review.content }}</div>
+  <div class="eyebrow finding-label">EXPLAINABLE FINDINGS</div>
+  {% for f in findings %}<div class="finding"><div class="finding-top"><span class="severity {{ f.severity|lower }}">{{ f.severity }}</span><strong>{{ f.issue }}</strong></div><p>{{ f.why }}</p><div class="fix"><b>Suggested action:</b> {{ f.fix }}</div></div>{% endfor %}
+  <div class="eyebrow finding-label">SUGGESTED DRAFT</div><div class="copy-box suggested">{{ review.suggestion }}</div>
+  </section>
+  <section class="panel approval-panel"><div class="eyebrow">HUMAN DECISION</div><h2>Review and update</h2><p class="muted">Check the suggested copy carefully. You own the final decision.</p>
+  <form method="post" class="approval-form">
+    <label>Editable content<textarea name="revised_content" rows="8">{{ review.content }}</textarea></label>
+    <label>Reviewer note<textarea name="reviewer_note" rows="3" placeholder="Explain the decision or changes...">{{ review.reviewer_note }}</textarea></label>
+    <button class="btn btn-green" name="action" value="Approved" type="submit">✓ Approve content</button>
+    <button class="btn btn-outline" name="action" value="Needs Revision" type="submit">↻ Request revision</button>
+    <button class="btn btn-quiet" name="action" value="Pending Approval" type="submit">Keep pending</button>
+  </form>
+  {% if review.reviewer_note %}<div class="reviewer-note"><strong>Previous reviewer note</strong><p>{{ review.reviewer_note }}</p></div>{% endif %}
+  </section>
+</div>
+{% endblock %}

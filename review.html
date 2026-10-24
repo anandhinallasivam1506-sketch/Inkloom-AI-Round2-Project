@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}New Review{% endblock %}
+{% block content %}
+<div class="page-heading"><div class="eyebrow">CONTENT QUALITY</div><h1>Review new content</h1><p>Run a local brand check, understand any flags, and send the item into the human approval queue.</p></div>
+<form class="form-card" method="post">
+  <div class="form-grid"><label>Content title<input name="title" required maxlength="160" placeholder="e.g. Homepage launch announcement" value="{{ form.get('title','') }}"></label>
+  <label>Content channel<select name="channel"><option>Website</option><option>Social media</option><option>Email</option><option>Advertisement</option><option>Blog</option><option>Internal document</option></select></label></div>
+  <label>Content to review<textarea name="content" required rows="9" placeholder="Paste the message you want to review...">{{ form.get('content','') }}</textarea><small class="helper">Tip: include the full copy so the checks have enough context.</small></label>
+  <div class="form-footer"><span class="privacy-note">🔒 Checked locally. No external AI API is called.</span><button class="btn" type="submit">Run brand review →</button></div>
+</form>
+<div class="notice"><span>✦</span><div><strong>What gets checked?</strong><p>Configured avoid-list terms, required terminology, absolute/numeric claims, vague links, and possible tone mismatches. These checks are a prototype, not a legal or factual guarantee.</p></div></div>
+{% endblock %}

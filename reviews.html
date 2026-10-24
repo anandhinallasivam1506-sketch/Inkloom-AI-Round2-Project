@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Review Queue{% endblock %}
+{% block content %}
+<div class="page-heading"><div class="eyebrow">COLLABORATION</div><h1>Review queue</h1><p>Track content, inspect findings, and record a human decision.</p></div>
+<div class="filter-row"><span class="filter-label">FILTER BY STATUS</span>
+<a class="filter {% if not selected_status %}selected{% endif %}" href="{{ url_for('reviews') }}">All</a>
+{% for s in ['Pending Approval','Needs Revision','Approved'] %}<a class="filter {% if selected_status==s %}selected{% endif %}" href="{{ url_for('reviews', status=s) }}">{{ s }}</a>{% endfor %}
+</div>
+<div class="table-card">{% if reviews %}<table><thead><tr><th>CONTENT</th><th>CHANNEL</th><th>SCORE</th><th>STATUS</th><th>UPDATED</th></tr></thead><tbody>
+{% for r in reviews %}<tr><td><a class="item-title" href="{{ url_for('review_detail', review_id=r.id) }}">{{ r.title }}</a><small class="subline">{{ r.content[:76] }}{% if r.content|length > 76 %}…{% endif %}</small></td><td>{{ r.channel }}</td><td><span class="score">{{ r.score }}<small>/100</small></span></td><td><span class="status {{ r.status|lower|replace(' ','-') }}">{{ r.status }}</span></td><td>{{ r.updated_at[:16].replace('T',' ') }}</td></tr>{% endfor %}
+</tbody></table>{% else %}<div class="empty">No items match this filter.</div>{% endif %}</div>
+<a class="btn" href="{{ url_for('review') }}">＋ New review</a>
+{% endblock %}
